@@ -12,6 +12,7 @@ type PropType = {
     removeTask: (id: string) => void
     changeFilter: (value: 'all' | 'active' | 'completed') => void
     addTask: (title: string) => void
+    changeStatus: (id: string, isDone: boolean) => void
 }
 
 const TodoList = (props: PropType) => {
@@ -47,9 +48,17 @@ const TodoList = (props: PropType) => {
                 {
                     props.tasks.map((task, index) => {
                         const removeTask = () => props.removeTask(task.id)
+                        const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+                            const newIsDoneValue = event.currentTarget.checked
+                            props.changeStatus(task.id, newIsDoneValue)
+                        }
 
                         return <li key={`${index}+${task.id}`}>
-                            <input type="checkbox" defaultChecked={task.isDone} />
+                            <input
+                                type="checkbox"
+                                checked={task.isDone}
+                                onChange={onChangeHandler}
+                            />
                             <span>{task.title}</span>
                             <button onClick={removeTask}>x</button>
                         </li>
