@@ -17,12 +17,20 @@ type PropType = {
 
 const TodoList = (props: PropType) => {
     const [taskTitle, setTaskTitle] = useState('')
+    const [error, setError] = useState<string | null>(null)
+
     const addTask = () => {
-        props.addTask(taskTitle)
-        setTaskTitle('')
+        if (taskTitle.trim() !== "") {
+            props.addTask(taskTitle)
+            setTaskTitle('')
+        } else {
+            setError("Title is required!")
+        }
     }
 
     const onEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        setError('')
+
         if (event.charCode === 13) {
             addTask()
         }
@@ -41,8 +49,10 @@ const TodoList = (props: PropType) => {
                     value={taskTitle}
                     onChange={onInputChange}
                     onKeyPress={onEnterPress}
+                    className={error ? 'error' : ''}
                 />
                 <button onClick={addTask}>+</button>
+                {error && <div className='error-message'>{error}</div>}
             </div>
             <ul>
                 {

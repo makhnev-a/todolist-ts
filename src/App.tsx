@@ -15,17 +15,16 @@ const App = () => {
     let tasksForTodolist = tasks
 
     if (filter === 'active') {
-        tasksForTodolist = tasks.filter(task => task.isDone === false)
+        tasksForTodolist = tasks.filter(task => !task.isDone)
     }
 
     if (filter === 'completed') {
-        tasksForTodolist = tasks.filter(task => task.isDone === true)
+        tasksForTodolist = tasks.filter(task => !task.isDone)
     }
 
     const addTask = (title: string) => {
         const task = {id: v1(), title: title, isDone: false}
         const newTasks = [task, ...tasks]
-
         setTasks(newTasks)
     }
 
