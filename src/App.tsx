@@ -10,7 +10,7 @@ const App = () => {
         {id: v1(), title: 'React', isDone: false},
     ])
 
-    const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('active')
+    const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all')
 
     let tasksForTodolist = tasks
 
@@ -19,7 +19,7 @@ const App = () => {
     }
 
     if (filter === 'completed') {
-        tasksForTodolist = tasks.filter(task => !task.isDone)
+        tasksForTodolist = tasks.filter(task => task.isDone)
     }
 
     const addTask = (title: string) => {
@@ -53,6 +53,7 @@ const App = () => {
                 changeFilter={changeFilter}
                 addTask={addTask}
                 changeStatus={changeStatus}
+                filter={filter}
             />
         </div>
     );

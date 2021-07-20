@@ -13,6 +13,7 @@ type PropType = {
     changeFilter: (value: 'all' | 'active' | 'completed') => void
     addTask: (title: string) => void
     changeStatus: (id: string, isDone: boolean) => void
+    filter: 'all' | 'active' | 'completed'
 }
 
 const TodoList = (props: PropType) => {
@@ -63,7 +64,7 @@ const TodoList = (props: PropType) => {
                             props.changeStatus(task.id, newIsDoneValue)
                         }
 
-                        return <li key={`${index}+${task.id}`}>
+                        return <li key={`${index}+${task.id}`} className={task.isDone ? 'is-done' : ''}>
                             <input
                                 type="checkbox"
                                 checked={task.isDone}
@@ -76,9 +77,18 @@ const TodoList = (props: PropType) => {
                 }
             </ul>
             <div>
-                <button onClick={changeFilterAll}>All</button>
-                <button onClick={changeFilterActive}>Active</button>
-                <button onClick={changeFilterCompleted}>Completed</button>
+                <button
+                    className={props.filter === 'all' ? 'active-filter' : ''}
+                    onClick={changeFilterAll}
+                >All</button>
+                <button
+                    className={props.filter === 'active' ? 'active-filter' : ''}
+                    onClick={changeFilterActive}
+                >Active</button>
+                <button
+                    className={props.filter === 'completed' ? 'active-filter' : ''}
+                    onClick={changeFilterCompleted}
+                >Completed</button>
             </div>
         </div>
     )
