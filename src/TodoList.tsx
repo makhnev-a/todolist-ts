@@ -20,19 +20,20 @@ type PropType = {
     changeStatus: (id: string, isDone: boolean, todoListID: string) => void
     removeTodoList: (todolist: string) => void
     changeTaskTitle: (todoListID: string, taskID: string, title: string) => void
+    changeTodoListTitle: (todoListID: string, title: string) => void
 }
 
 const TodoList = (props: PropType) => {
     const changeFilterAll = () => props.changeFilter('all', props.id)
     const changeFilterCompleted = () => props.changeFilter('completed', props.id)
     const changeFilterActive = () => props.changeFilter('active', props.id)
-
     const addTask = (title: string) => props.addTask(title, props.id)
-
+    const editTodoListTitle = (title: string) => props.changeTodoListTitle(props.id, title)
 
     return (
         <div>
-            <h3>{props.title}
+            <h3>
+                <EditableSpan value={props.title} onChange={editTodoListTitle}/>
                 <button onClick={() => props.removeTodoList(props.id)}>x</button>
             </h3>
             <AddItemForm addItem={addTask}/>
