@@ -46,6 +46,15 @@ const App = () => {
         ]
     })
 
+    const changeTaskTitle = (todoListID: string, taskID: string, title: string) => {
+        const task = tasks[todoListID].find(task => task.id === taskID)
+
+        if (task) {
+            task.title = title
+            setTasks({...tasks})
+        }
+    }
+
     const addTask = (title: string, todoListID: string) => {
         const newTask = {id: v1(), title: title, isDone: false}
 
@@ -74,7 +83,6 @@ const App = () => {
     }
 
     const changeTodoListFilter = (value: FilterType, todoListID: string) => {
-        debugger
         setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, filter: value} : tl))
     }
 
@@ -122,6 +130,7 @@ const App = () => {
                             addTask={addTask}
                             changeStatus={changeStatus}
                             removeTodoList={removeTodoList}
+                            changeTaskTitle={changeTaskTitle}
                         />
                     )
                 })

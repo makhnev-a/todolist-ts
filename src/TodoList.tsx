@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import {FilterType} from "./App";
 import AddItemForm from "./AddItemForm";
+import EditableSpan from "./EditableSpan";
 
 export type TaskType = {
     id: string
@@ -18,6 +19,7 @@ type PropType = {
     addTask: (title: string, todoListID: string) => void
     changeStatus: (id: string, isDone: boolean, todoListID: string) => void
     removeTodoList: (todolist: string) => void
+    changeTaskTitle: (todoListID: string, taskID: string, title: string) => void
 }
 
 const TodoList = (props: PropType) => {
@@ -27,9 +29,12 @@ const TodoList = (props: PropType) => {
 
     const addTask = (title: string) => props.addTask(title, props.id)
 
+
     return (
         <div>
-            <h3>{props.title} <button onClick={() => props.removeTodoList(props.id)}>x</button></h3>
+            <h3>{props.title}
+                <button onClick={() => props.removeTodoList(props.id)}>x</button>
+            </h3>
             <AddItemForm addItem={addTask}/>
             <ul>
                 {
@@ -39,6 +44,7 @@ const TodoList = (props: PropType) => {
                             const newIsDoneValue = event.currentTarget.checked
                             props.changeStatus(task.id, newIsDoneValue, props.id)
                         }
+                        const changeTaskTitle = (title: string) => props.changeTaskTitle(props.id, task.id, title)
 
                         return <li key={`${index}+${task.id}`} className={task.isDone ? 'is-done' : ''}>
                             <input
@@ -46,7 +52,7 @@ const TodoList = (props: PropType) => {
                                 checked={task.isDone}
                                 onChange={onChangeHandler}
                             />
-                            <span>{task.title}</span>
+                            <EditableSpan value={task.title} onChange={changeTaskTitle}/>
                             <button onClick={removeTask}>x</button>
                         </li>
                     })
@@ -56,15 +62,18 @@ const TodoList = (props: PropType) => {
                 <button
                     className={props.filter === 'all' ? 'active-filter' : ''}
                     onClick={changeFilterAll}
-                >All</button>
+                >All
+                </button>
                 <button
                     className={props.filter === 'active' ? 'active-filter' : ''}
                     onClick={changeFilterActive}
-                >Active</button>
+                >Active
+                </button>
                 <button
                     className={props.filter === 'completed' ? 'active-filter' : ''}
                     onClick={changeFilterCompleted}
-                >Completed</button>
+                >Completed
+                </button>
             </div>
         </div>
     )
