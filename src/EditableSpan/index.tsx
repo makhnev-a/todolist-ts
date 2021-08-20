@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import {TextField} from "@material-ui/core";
 
 type PropTypes = {
     value: string
@@ -23,7 +24,8 @@ const EditableSpan: React.FC<PropTypes> = (props) => {
         <>
             {
                 editMode
-                    ? <input
+                    ? <TextField
+                        variant="outlined"
                         autoFocus={true}
                         type="text"
                         value={title}

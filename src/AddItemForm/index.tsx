@@ -1,10 +1,12 @@
 import React, {useState} from "react";
+import {IconButton, TextField} from "@material-ui/core";
+import {AddBox} from "@material-ui/icons";
 
 type PropTypes = {
     addItem: (title: string) => void
 }
 
-const AddItemForm:React.FC<PropTypes> = (props) => {
+const AddItemForm: React.FC<PropTypes> = (props) => {
     const [title, setTitle] = useState("")
     const [error, setError] = useState<string | null>(null)
 
@@ -29,14 +31,20 @@ const AddItemForm:React.FC<PropTypes> = (props) => {
 
     return (
         <div>
-            <input
+            <TextField
+                error={!!error}
+                variant="outlined"
                 value={title}
                 onChange={onInputChange}
                 onKeyPress={onEnterPress}
-                className={error ? 'error' : ''}
+                label="Title"
+                helperText={error}
             />
-            <button onClick={addItem}>+</button>
-            {error && <div className='error-message'>{error}</div>}
+            <IconButton
+                color="primary"
+                onClick={addItem}>
+                <AddBox/>
+            </IconButton>
         </div>
     )
 }
